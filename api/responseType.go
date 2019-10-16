@@ -168,3 +168,43 @@ func newFeeHistoryResponse(as *accountStation, ph [] paidHistory) *feeHistoryRes
 	}
 }
 
+type feeHistoryWithoutPaidResponse struct {
+	Account       string           `json:"account"`
+	Name          string           `json:"account_name"`
+	UnpaidHistory [] unpaidHistory `json:"unpaid_history"`
+}
+
+type unpaidHistory struct {
+	CurrentPeriod string   `json:"current_period"`
+	Charge        string   `json:"charge"`
+	CurrentMeter  string   `json:"current_meter"`
+	PreviousMeter string   `json:"previous_meter"`
+	OtherFee      otherFee `json:"other_fee"`
+}
+
+func newUnpaidHistory (detail *feeDetail, date string) *unpaidHistory {
+	return &unpaidHistory{
+		CurrentPeriod: date,
+		Charge:        detail.Charge,
+		CurrentMeter:  detail.CurrentMeter,
+		PreviousMeter: detail.PreviousMeter,
+		OtherFee: otherFee{
+			Wsf:    detail.Wsf,
+			Xfft:   detail.Xfft,
+			Ljf:    detail.Ljf,
+			Ecjydf: detail.Ecjydf,
+			Szyf:   detail.Szyf,
+			Cjhys:  detail.Cjhys,
+			Wyj:    detail.Wyj,
+			Wswyj:  detail.Wswyj,
+		},
+	}
+}
+
+func newFeeHistoryWithoutPaidResponse(as *accountStation, history [] unpaidHistory) *feeHistoryWithoutPaidResponse {
+	return &feeHistoryWithoutPaidResponse{
+		Account:       as.Account,
+		Name:          as.Name,
+		UnpaidHistory: history,
+	}
+}
