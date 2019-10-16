@@ -8,6 +8,8 @@ var (
 
 var mssqlQueryAccountCmd = "SELECT C_hh, C_dz, C_hm, C_sj FROM YHDA WHERE C_hh = @account"
 
+var mssqlQueryCheckAccountCmd = "SELECT C_hh FROM YHDA WHERE C_hh = @account AND C_hm = @name"
+
 var mysqlQueryAccountCmd = "SELECT account FROM user_data WHERE id_card_number=?"
 
 var mysqlQueryDefaultAccountCmd = "SELECT default_account FROM wechat_profile WHERE id_card_number=?"
@@ -44,3 +46,5 @@ UPDATE fee_detail SET
 paid = ?
 WHERE yszbh = ?
 `
+
+var mysqlQueryFeeDetailCmd = "SELECT * FROM fee_detail WHERE account = ? AND current_period = ?"
