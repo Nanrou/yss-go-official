@@ -47,3 +47,25 @@ func newAccountsResponse(as *accountStation) *accountsResponse {
 		UnpaidPeriodCount: as.UnpaidPeriodCount,
 	}
 }
+
+type defaultAccountResponse struct {
+	Account      string `json:"account"`
+	Address      string `json:"account_address"`
+	Name         string `json:"account_name"`
+	Charge       string `json:"charge"`
+	CurrentMeter string `json:"current_meter"`
+	Meter        string `json:"meter"`
+	Paid         bool   `json:"paid"`
+}
+
+func newDefaultAccountResponse(as *accountStation) *defaultAccountResponse {
+	return &defaultAccountResponse{
+		Account:      as.Account,
+		Address:      as.Address,
+		Name:         as.Name,
+		Charge:       as.Charge,
+		CurrentMeter: as.CurrentMeter,
+		Meter:        as.Meter,
+		Paid:         as.Paid,
+	}
+}

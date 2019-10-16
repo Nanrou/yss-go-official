@@ -83,6 +83,8 @@ func handleAccounts(w http.ResponseWriter, r *http.Request) {
 					}
 				}
 				close(outputCh)
+
+				responseContent = res
 			}
 		}
 	}
