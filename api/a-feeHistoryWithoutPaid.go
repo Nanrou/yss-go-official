@@ -92,7 +92,7 @@ func handleFeeHistoryWithoutPaidInner(r *http.Request, account string) *feeHisto
 			var wg sync.WaitGroup
 
 			for _, period := range unpaidPeriod {
-				go handleSingleUnpaid(&wg, outputCh, period)
+				go handleSingleUnpaid(r, &wg, outputCh, period)
 				wg.Add(1)
 			}
 
@@ -117,8 +117,8 @@ func handleFeeHistoryWithoutPaidInner(r *http.Request, account string) *feeHisto
 	return newFeeHistoryWithoutPaidResponse(&as, uph)
 }
 
-func handleSingleUnpaid(wg *sync.WaitGroup, outputCh chan *unpaidHistory, unpaidMeta [] string) {
-	res := newUnpaidHistory(getFeeDetail(unpaidMeta[0], unpaidMeta[1]), unpaidMeta[1])
+func handleSingleUnpaid(r *http.Request, wg *sync.WaitGroup, outputCh chan *unpaidHistory, unpaidMeta [] string) {
+	res := newUnpaidHistory(getFeeDetail(r, unpaidMeta[0], unpaidMeta[1]), unpaidMeta[1])
 	outputCh <- res
 	wg.Done()
 }
