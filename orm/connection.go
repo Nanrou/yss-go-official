@@ -64,12 +64,12 @@ var (
 	MssqlDB   *sql.DB
 	MysqlDB   *sql.DB
 	RedisConn *redis.Client
-	Config    *config
+	_config    *config
 )
 
 func init() {
-	Config := getConfig()
-	MssqlDB = mssqlConn(Config)
-	MysqlDB = mysqlConn(Config)
-	RedisConn = redisConn(Config.Secret)
+	_config := GetConfig()
+	MssqlDB = mssqlConn(_config)
+	MysqlDB = mysqlConn(_config)
+	RedisConn = redisConn(_config.Secret)
 }

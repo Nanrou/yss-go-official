@@ -53,7 +53,7 @@ func (c *config) GetTrustNetwork() [] string {
 }
 
 // 获取生产config
-func getConfig() *config {
+func GetConfig() *config {
 	s, _ := os.Getwd()
 	s = filepath.Join(s, "config.yaml")
 	content, err := ioutil.ReadFile(s)

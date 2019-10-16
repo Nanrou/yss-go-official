@@ -11,13 +11,16 @@ import (
 	"yss-go-official/orm"
 )
 
-var trustNetwork []*net.IPNet
+var trustNetwork [] *net.IPNet
+var trustIp [] string
 
-func init () {
-	for _, network := range orm.Config.GetTrustNetwork() {
+func init() {
+	config := orm.GetConfig()
+	for _, network := range config.GetTrustNetwork() {
 		_, n, _ := net.ParseCIDR(network)
 		trustNetwork = append(trustNetwork, n)
 	}
+	trustIp = config.GetTrustIps()
 }
 
 /** 白名单校验 */
@@ -34,7 +37,7 @@ func WhiteListMiddleware(next http.Handler) http.Handler {
 		}
 
 		// 检查是否在白名单
-		for _, _ip := range orm.Config.GetTrustIps() {
+		for _, _ip := range trustIp {
 			if _ip == _rip {
 				trusted = true
 				break
