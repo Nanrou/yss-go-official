@@ -135,3 +135,36 @@ func newAccountWithoutBindingResponse(fd *feeDetail, account string, date string
 		WaterCharge: fd.WaterCharge,
 	}
 }
+
+type feeHistoryResponse struct {
+	Account           string         `json:"account"`
+	Address           string         `json:"account_address"`
+	Name              string         `json:"account_name"`
+	Charge            string         `json:"charge"`
+	CurrentMeter      string         `json:"current_meter"`
+	Meter             string         `json:"meter"`
+	Paid              bool           `json:"paid"`
+	PaidHistory       [] paidHistory `json:"paid_history"`
+	UnpaidPeriodCount int            `json:"unpaid_period_count"`
+}
+
+type paidHistory struct {
+	Date   string `json:"date"`
+	Charge string `json:"charge"`
+	BillId string `json:"bill_id"`
+}
+
+func newFeeHistoryResponse(as *accountStation, ph [] paidHistory) *feeHistoryResponse {
+	return &feeHistoryResponse{
+		Account:           as.Account,
+		Address:           as.Address,
+		Name:              as.Name,
+		Charge:            as.Charge,
+		CurrentMeter:      as.CurrentMeter,
+		Meter:             as.Meter,
+		Paid:              as.Paid,
+		PaidHistory:       ph,
+		UnpaidPeriodCount: as.UnpaidPeriodCount,
+	}
+}
+

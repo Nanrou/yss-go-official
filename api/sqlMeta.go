@@ -12,6 +12,8 @@ var mssqlQueryCheckAccountCmd = "SELECT C_hh FROM YHDA WHERE C_hh = @account AND
 
 var mysqlQueryAccountCmd = "SELECT account FROM user_data WHERE id_card_number=?"
 
+var mysqlQueryAccountCheckCmd = "SELECT account FROM user_data WHERE id_card_number=? AND account=?"
+
 var mysqlQueryDefaultAccountCmd = "SELECT default_account FROM wechat_profile WHERE id_card_number=?"
 
 var mysqlQueryAccountDataCmd = "SELECT * FROM account_data WHERE account=?"
