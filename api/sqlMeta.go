@@ -38,9 +38,9 @@ WHERE account=?
 
 var mysqlInsertFeeDetailCmd = `
 INSERT INTO fee_detail
-(yszbh, account, name, current_period, charge, current_meter, previous_meter, paid, wsf, xfft, ljf, ecjydf, szyf, cjhys, wyj, wswyj)
+(yszbh, account, name, current_period, charge, current_meter, previous_meter, paid, wsf, xfft, ljf, ecjydf, szyf, cjhys, wyj, wswyj, water_charge)
 VALUES
-(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 `
 
 var mysqlUpdateFeeDetailCmd = `

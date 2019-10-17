@@ -39,7 +39,7 @@ func handleAccountWithoutBinding(w http.ResponseWriter, r *http.Request) {
 				of   otherFee
 			)
 			err = stmt.QueryRow(account, date).Scan(&_useless, &_useless, &awbr.Account, &awbr.Name, &awbr.CurrentPeriod, &awbr.Charge,
-				&awbr.CurrentMeter, &awbr.PreviousMeter, &awbr.Paid, &of.Wsf, &of.Xfft, &of.Ljf, &of.Ecjydf, &of.Szyf, &of.Cjhys, &of.Wyj, &of.Wswyj)
+				&awbr.CurrentMeter, &awbr.PreviousMeter, &awbr.Paid, &of.Wsf, &of.Xfft, &of.Ljf, &of.Ecjydf, &of.Szyf, &of.Cjhys, &of.Wyj, &of.Wswyj, &awbr.WaterCharge)
 			if err != nil {
 				// 遇到缺失的，在这里更新
 				if err == sql.ErrNoRows {
@@ -47,6 +47,8 @@ func handleAccountWithoutBinding(w http.ResponseWriter, r *http.Request) {
 				} else {
 					logger.GetLogEntry(r).Infof("Mysql query detail error, err: %s ", err)
 				}
+			} else {
+				awbr.OtherFee = of
 			}
 		}
 		err = render.Render(w, r, NewResponseOK(awbr))
@@ -133,7 +135,7 @@ func insertFeeDetailToMysql(r *http.Request, yszbh string, awbr *accountWithoutB
 	} else {
 		// 插入失败的话就更新
 		_, err = stmt.Exec(yszbh, awbr.Account, awbr.Name, awbr.CurrentPeriod, awbr.Charge, awbr.CurrentMeter, awbr.PreviousMeter,
-			awbr.Paid, awbr.OtherFee.Wsf, awbr.OtherFee.Xfft, awbr.OtherFee.Ljf, awbr.OtherFee.Ecjydf, awbr.OtherFee.Szyf, awbr.OtherFee.Cjhys, awbr.OtherFee.Wyj, awbr.OtherFee.Wswyj)
+			awbr.Paid, awbr.OtherFee.Wsf, awbr.OtherFee.Xfft, awbr.OtherFee.Ljf, awbr.OtherFee.Ecjydf, awbr.OtherFee.Szyf, awbr.OtherFee.Cjhys, awbr.OtherFee.Wyj, awbr.OtherFee.Wswyj, awbr.WaterCharge)
 		if err != nil {
 			if driverErr, ok := err.(*mysql.MySQLError); ok {
 				if driverErr.Number == 1062 {
