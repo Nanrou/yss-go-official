@@ -17,8 +17,10 @@ var trustIp [] string
 func init() {
 	config := orm.GetConfig()
 	for _, network := range config.GetTrustNetwork() {
-		_, n, _ := net.ParseCIDR(network)
-		trustNetwork = append(trustNetwork, n)
+		_, n, err := net.ParseCIDR(network)
+		if err == nil {
+			trustNetwork = append(trustNetwork, n)
+		}
 	}
 	trustIp = config.GetTrustIps()
 }
