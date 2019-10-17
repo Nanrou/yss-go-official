@@ -61,6 +61,7 @@ func WhiteListMiddleware(next http.Handler) http.Handler {
 			next.ServeHTTP(w, r)
 		} else {
 			// return 403
+			logger.GetLogEntry(r).Info("Invalid ip ", r.RemoteAddr)
 			err := render.Render(w, r, ErrForbidden)
 			if err != nil {
 				logger.GetLogEntry(r).Info("WhiteListMiddleware error", err)
