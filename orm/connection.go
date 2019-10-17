@@ -42,11 +42,10 @@ func mssqlConn(c *config) *sql.DB {
 
 func redisConn(passwd string) *redis.Client {
 	var redisAddress string
-	// todo handle password in different env
-	passwd = ""
 
 	if runtime.GOOS != "linux" {
 		redisAddress = "localhost:6379"
+		passwd = ""
 	} else {
 		redisAddress = "redis:6379"
 	}
