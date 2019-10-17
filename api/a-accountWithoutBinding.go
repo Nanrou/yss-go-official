@@ -15,6 +15,13 @@ import (
 func handleAccountWithoutBinding(w http.ResponseWriter, r *http.Request) {
 	account := r.URL.Query().Get("account")
 	name := r.URL.Query().Get("name")
+	if len(account) & len(name) == 0 {
+		err := render.Render(w, r, NewErrInvalidAccountData())
+		if err != nil {
+			logger.GetLogEntry(r).Info(err)
+		}
+		return
+	}
 
 	var _useless string
 	err := conn.MssqlDB.QueryRow(mssqlQueryCheckAccountCmd,
