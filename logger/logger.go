@@ -72,7 +72,7 @@ func LogEntrySetFields(r *http.Request, fields map[string]interface{}) {
 }
 
 
-var LoggerMiddleware func(next http.Handler) http.Handler
+var Middleware func(next http.Handler) http.Handler
 
 func init() {
 	logger := logrus.New()
@@ -85,5 +85,5 @@ func init() {
 		}
 		logger.SetOutput(file)
 	}
-	LoggerMiddleware = NewStructuredLogger(logger)
+	Middleware = NewStructuredLogger(logger)
 }

@@ -35,14 +35,18 @@ func handleAccountWithoutBinding(w http.ResponseWriter, r *http.Request) {
 			logger.GetLogEntry(r).Infof("Mysql prepare statement error, stmt: %s, err: %s ", mysqlQueryAccountCmd, err)
 		} else {
 			var (
-				date = time.Now().Format("200610")
+				date = time.Now().Format("200601")
 				of   otherFee
 			)
-			err = stmt.QueryRow(account, date).Scan(&_useless, &awbr.Account, &awbr.Name, &awbr.CurrentPeriod, &awbr.Charge,
+			err = stmt.QueryRow(account, date).Scan(&_useless, &_useless, &awbr.Account, &awbr.Name, &awbr.CurrentPeriod, &awbr.Charge,
 				&awbr.CurrentMeter, &awbr.PreviousMeter, &awbr.Paid, &of.Wsf, &of.Xfft, &of.Ljf, &of.Ecjydf, &of.Szyf, &of.Cjhys, &of.Wyj, &of.Wswyj)
 			if err != nil {
 				// 遇到缺失的，在这里更新
-				awbr = handleSingleAccountWithoutBinding(r, account)
+				if err == sql.ErrNoRows {
+					awbr = handleSingleAccountWithoutBinding(r, account)
+				} else {
+					logger.GetLogEntry(r).Infof("Mysql query detail error, err: %s ", err)
+				}
 			}
 		}
 		err = render.Render(w, r, NewResponseOK(awbr))
