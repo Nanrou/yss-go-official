@@ -86,6 +86,7 @@ func redisSet(r *http.Request, key string, value interface{}) {
 func init() {
 	YssRouter = chi.NewRouter()
 	YssRouter.Use(middleware.RealIP)
+	YssRouter.Use(logger.LoggerMiddleware)
 	YssRouter.Use(render.SetContentType(render.ContentTypeJSON))
 	YssRouter.Use(WhiteListMiddleware)
 	YssRouter.Use(InjectIdentifierMiddleware)
