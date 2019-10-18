@@ -5,7 +5,6 @@ import (
 	"github.com/go-chi/render"
 	"github.com/go-sql-driver/mysql"
 	"net/http"
-	"time"
 	"yss-go-official/logger"
 	conn "yss-go-official/orm"
 )
@@ -41,11 +40,8 @@ func handleAccountWithoutBinding(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			logger.GetLogEntry(r).Infof("Mysql prepare statement error, stmt: %s, err: %s ", mysqlQueryAccountCmd, err)
 		} else {
-			var (
-				date = time.Now().Format("200601")
-				of   otherFee
-			)
-			err = stmt.QueryRow(account, date).Scan(&_useless, &_useless, &awbr.Account, &awbr.Name, &awbr.CurrentPeriod, &awbr.Charge,
+			var of otherFee
+			err = stmt.QueryRow(account).Scan(&_useless, &_useless, &awbr.Account, &awbr.Name, &awbr.CurrentPeriod, &awbr.Charge,
 				&awbr.CurrentMeter, &awbr.PreviousMeter, &awbr.Paid, &of.Wsf, &of.Xfft, &of.Ljf, &of.Ecjydf, &of.Szyf, &of.Cjhys, &of.Wyj, &of.Wswyj, &awbr.WaterCharge)
 			if err != nil {
 				// 遇到缺失的，在这里更新

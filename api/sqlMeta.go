@@ -49,4 +49,4 @@ paid = ?
 WHERE yszbh = ?
 `
 
-var mysqlQueryFeeDetailCmd = "SELECT * FROM fee_detail WHERE account = ? AND current_period = ?"
+var mysqlQueryFeeDetailCmd = "SELECT * FROM fee_detail WHERE account = ? ORDER BY id DESC LIMIT 1"
