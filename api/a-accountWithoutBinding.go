@@ -14,8 +14,8 @@ import (
 func handleAccountWithoutBinding(w http.ResponseWriter, r *http.Request) {
 	account := r.URL.Query().Get("account")
 	name := r.URL.Query().Get("name")
-	if len(account) & len(name) == 0 {
-		err := render.Render(w, r, NewErrInvalidAccountData())
+	if len(account) ==0 || len(name) == 0 {
+		err := render.Render(w, r, NewErrRequiredFields())
 		if err != nil {
 			logger.GetLogEntry(r).Info(err)
 		}

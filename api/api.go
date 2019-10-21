@@ -98,6 +98,7 @@ func init() {
 		r.Get("/account_without_binding", handleAccountWithoutBinding)
 		r.Get("/fee_history", handleFeeHistory)
 		r.Get("/fee_history_without_paid", handleFeeHistoryWithoutPaid)
+		r.Get("/fee_detail", handleFeeDetail)
 		// r.Get("/redis_in", handleRedisIn)
 		// r.Get("/redis_out", handleRedisOut)
 	})
