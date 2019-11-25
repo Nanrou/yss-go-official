@@ -45,7 +45,8 @@ VALUES
 
 var mysqlUpdateFeeDetailCmd = `
 UPDATE fee_detail SET
-paid = ?
+paid = ?,
+charge = ?
 WHERE yszbh = ?
 `
 

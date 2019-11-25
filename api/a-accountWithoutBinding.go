@@ -122,6 +122,7 @@ func getFeeDetail(r *http.Request, yszbh string, date string) *feeDetail {
 		}
 		if tmpPaid == "true" {
 			fd.Paid = true
+			fd.Charge = "0"  // fix
 		} else {
 			fd.Paid = false
 		}
@@ -158,4 +159,3 @@ func insertFeeDetailToMysql(r *http.Request, yszbh string, awbr *accountWithoutB
 		}
 	}
 }
-
