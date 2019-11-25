@@ -22,10 +22,14 @@ func handleDefaultAccount(w http.ResponseWriter, r *http.Request) {
 	} else {
 		err = stmt.QueryRow(id).Scan(&defaultAccount)
 		// 无默认账号的直接返回空的as
-		if err == nil && defaultAccount.Valid {
-			as = handleSingleAccountSync(defaultAccount.String, defaultAccount.String, r)
+		if err == nil {
+			if defaultAccount.Valid {
+				as = handleSingleAccountSync(defaultAccount.String, defaultAccount.String, r)
+			}
 		} else {
-			logger.GetLogEntry(r).Infof("Mysql statement exec error, params: %s, err: %s", id, err)
+			if err.Error() != "sql: no rows in result set" {
+				logger.GetLogEntry(r).Infof("Mysql statement exec error, params: %s, err: %s", id, err)
+			}
 		}
 	}
 	err = render.Render(w, r, NewResponseOK(newDefaultAccountResponse(&as)))
