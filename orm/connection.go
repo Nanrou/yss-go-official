@@ -63,7 +63,7 @@ var (
 	MssqlDB   *sql.DB
 	MysqlDB   *sql.DB
 	RedisConn *redis.Client
-	_config    *config
+	_config   *config
 )
 
 func init() {

@@ -39,10 +39,9 @@ func handleFeeHistory(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-
-func handleFeeHistoryInner(r *http.Request, account string) *feeHistoryResponse{
+func handleFeeHistoryInner(r *http.Request, account string) *feeHistoryResponse {
 	var as accountStation
-	var ph [] paidHistory // 存放已缴费的数据
+	var ph []paidHistory // 存放已缴费的数据
 
 	rows, err := conn.MssqlDB.Query(billList,
 		sql.Named("account", account),

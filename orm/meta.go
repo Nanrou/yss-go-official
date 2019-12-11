@@ -22,8 +22,8 @@ type sqlConfig struct {
 
 // 白名单
 type trustMeta struct {
-	Ip      [] string
-	Network [] string
+	Ip      []string
+	Network []string
 }
 
 // config yaml的定义
@@ -44,11 +44,11 @@ func (c *config) sqlMeta() sqlConfig {
 	}
 }
 
-func (c *config) GetTrustIps() [] string {
+func (c *config) GetTrustIps() []string {
 	return c.Trust.Ip
 }
 
-func (c *config) GetTrustNetwork() [] string {
+func (c *config) GetTrustNetwork() []string {
 	return c.Trust.Network
 }
 

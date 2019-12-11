@@ -1,5 +1,7 @@
 package api
 
+import "database/sql"
+
 // 存储过程名称
 var (
 	billList   = "Mob_GetHisBill"
@@ -51,3 +53,39 @@ WHERE yszbh = ?
 `
 
 var mysqlQueryFeeDetailCmd = "SELECT * FROM fee_detail WHERE account = ? ORDER BY id DESC LIMIT 1"
+
+var mysqlQueryBindingCmd = "SELECT * FROM wechat_profile WHERE id_card_number = ?"
+
+var mysqlCreateWechatCmd = `
+INSERT INTO wechat_profile
+(id_card_number, default_account) 
+VALUES 
+(?, ?)
+`
+
+var mysqlSetDefaultAccountCmd = "UPDATE wechat_profile SET default_account= ? WHERE id_card_number= ?"
+var mysqlCreateUserDataCmd = `
+INSERT INTO user_data (
+    id_card_number,
+    account,
+    account_name,
+    account_phone
+) VALUES (?, ?, ?, ?)
+`
+
+type wechatProfile struct {
+	id             int
+	idn            string
+	defaultAccount sql.NullString
+}
+
+type userData struct {
+	id      int
+	idn     string
+	account string
+	name    string
+	phone   string
+}
+
+var mysqlDeleteUserDataCmd = "DELETE FROM USER_DATA WHERE id_card_number=? AND account=?"
+var mysqlUnsetDefaultCmd = "UPDATE wechat_profile SET default_account=null WHERE id_card_number=? AND default_account=?"

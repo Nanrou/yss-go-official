@@ -11,8 +11,8 @@ import (
 	"yss-go-official/orm"
 )
 
-var trustNetwork [] *net.IPNet
-var trustIp [] string
+var trustNetwork []*net.IPNet
+var trustIp []string
 
 func init() {
 	config := orm.GetConfig()

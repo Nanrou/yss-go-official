@@ -9,7 +9,6 @@ import (
 
 var keyFeeDetail = "%s:keyFeeDetail"
 
-
 // fee_detail
 func handleFeeDetail(w http.ResponseWriter, r *http.Request) {
 	var err error

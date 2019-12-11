@@ -48,11 +48,9 @@ func (l *StructuredLogger) NewLogEntry(r *http.Request) middleware.LogEntry {
 	return entry
 }
 
-
 func NewStructuredLogger(logger *logrus.Logger) func(next http.Handler) http.Handler {
 	return middleware.RequestLogger(&StructuredLogger{logger})
 }
-
 
 func GetLogEntry(r *http.Request) logrus.FieldLogger {
 	entry := middleware.GetLogEntry(r).(*StructuredLoggerEntry)
@@ -70,7 +68,6 @@ func LogEntrySetFields(r *http.Request, fields map[string]interface{}) {
 		entry.Logger = entry.Logger.WithFields(fields)
 	}
 }
-
 
 var Middleware func(next http.Handler) http.Handler
 

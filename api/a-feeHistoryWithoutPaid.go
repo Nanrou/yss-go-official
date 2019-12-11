@@ -39,9 +39,9 @@ func handleFeeHistoryWithoutPaid(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func handleFeeHistoryWithoutPaidInner(r *http.Request, account string) *feeHistoryWithoutPaidResponse{
+func handleFeeHistoryWithoutPaidInner(r *http.Request, account string) *feeHistoryWithoutPaidResponse {
 	var as accountStation
-	var uph [] unpaidHistory // 存放未缴费的数据
+	var uph []unpaidHistory // 存放未缴费的数据
 
 	rows, err := conn.MssqlDB.Query(billList,
 		sql.Named("account", account),
@@ -70,7 +70,7 @@ func handleFeeHistoryWithoutPaidInner(r *http.Request, account string) *feeHisto
 			logger.GetLogEntry(r).Info("cant get account from mssql, err: ", err)
 		} else {
 			as.Name = _name.String
-			var unpaidPeriod [] []string
+			var unpaidPeriod [][]string
 
 			for rows.Next() {
 				err := rows.Scan(&uDate, &tmpCharge, &tmpCurrentMeter, &tmpPreviousMeter, &tmpIsPaid, &uYszbh)
@@ -83,7 +83,7 @@ func handleFeeHistoryWithoutPaidInner(r *http.Request, account string) *feeHisto
 				if uYszbh.Valid {
 					// 处理未缴费的
 					if tmpIsPaid != "true" {
-						unpaidPeriod = append(unpaidPeriod, [] string {uYszbh.String, uDate})
+						unpaidPeriod = append(unpaidPeriod, []string{uYszbh.String, uDate})
 					}
 				}
 			}
@@ -117,7 +117,7 @@ func handleFeeHistoryWithoutPaidInner(r *http.Request, account string) *feeHisto
 	return newFeeHistoryWithoutPaidResponse(&as, uph)
 }
 
-func handleSingleUnpaid(r *http.Request, wg *sync.WaitGroup, outputCh chan *unpaidHistory, unpaidMeta [] string) {
+func handleSingleUnpaid(r *http.Request, wg *sync.WaitGroup, outputCh chan *unpaidHistory, unpaidMeta []string) {
 	res := newUnpaidHistory(getFeeDetail(r, unpaidMeta[0], unpaidMeta[1]), unpaidMeta[1])
 	outputCh <- res
 	wg.Done()

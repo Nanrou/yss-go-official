@@ -13,7 +13,6 @@ import (
 	conn "yss-go-official/orm"
 )
 
-
 // accounts
 /** handleAccounts -> handleSingleAccount -> handleSingleAccountSync -> getAccountDataFromMssql -> getBillListFromMssql */
 func handleAccounts(w http.ResponseWriter, r *http.Request) {
@@ -62,7 +61,7 @@ func handleAccounts(w http.ResponseWriter, r *http.Request) {
 				// handle single
 				outputCh := make(chan *accountStation, 10)
 
-				var res [] *accountsResponse
+				var res []*accountsResponse
 				var wg sync.WaitGroup
 
 				// 分发任务

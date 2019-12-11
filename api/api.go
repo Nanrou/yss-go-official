@@ -50,8 +50,8 @@ func checkBinding(r *http.Request) (string, bool) {
 }
 
 // Get
-func redisGet(r *http.Request, key string) (map[string] interface{}, bool) {
-	var res map[string] interface{}
+func redisGet(r *http.Request, key string) (map[string]interface{}, bool) {
+	var res map[string]interface{}
 	var exist bool
 	if ok, err := conn.RedisConn.Exists(key).Result(); err == nil {
 		if ok == 1 {
@@ -74,7 +74,7 @@ func redisGet(r *http.Request, key string) (map[string] interface{}, bool) {
 // Set
 func redisSet(r *http.Request, key string, value interface{}) {
 	if content, err := json.Marshal(value); err == nil {
-		_, err := conn.RedisConn.Set(key, content, time.Hour * 1).Result()
+		_, err := conn.RedisConn.Set(key, content, time.Hour*1).Result()
 		if err != nil {
 			logger.GetLogEntry(r).Info("redis set error, err: ", err)
 		}
@@ -99,6 +99,8 @@ func init() {
 		r.Get("/fee_history", handleFeeHistory)
 		r.Get("/fee_history_without_paid", handleFeeHistoryWithoutPaid)
 		r.Get("/fee_detail", handleFeeDetail)
+		r.Post("/bind", handleBind)
+		r.Post("/cancel_bind", handleCancelBind)
 		// r.Get("/redis_in", handleRedisIn)
 		// r.Get("/redis_out", handleRedisOut)
 	})

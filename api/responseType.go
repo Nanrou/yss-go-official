@@ -137,15 +137,15 @@ func newAccountWithoutBindingResponse(fd *feeDetail, account string, date string
 }
 
 type feeHistoryResponse struct {
-	Account           string         `json:"account"`
-	Address           string         `json:"account_address"`
-	Name              string         `json:"account_name"`
-	Charge            string         `json:"charge"`
-	CurrentMeter      string         `json:"current_meter"`
-	Meter             string         `json:"meter"`
-	Paid              bool           `json:"paid"`
-	PaidHistory       [] paidHistory `json:"paid_history"`
-	UnpaidPeriodCount int            `json:"unpaid_period_count"`
+	Account           string        `json:"account"`
+	Address           string        `json:"account_address"`
+	Name              string        `json:"account_name"`
+	Charge            string        `json:"charge"`
+	CurrentMeter      string        `json:"current_meter"`
+	Meter             string        `json:"meter"`
+	Paid              bool          `json:"paid"`
+	PaidHistory       []paidHistory `json:"paid_history"`
+	UnpaidPeriodCount int           `json:"unpaid_period_count"`
 }
 
 type paidHistory struct {
@@ -154,7 +154,7 @@ type paidHistory struct {
 	BillId string `json:"bill_id"`
 }
 
-func newFeeHistoryResponse(as *accountStation, ph [] paidHistory) *feeHistoryResponse {
+func newFeeHistoryResponse(as *accountStation, ph []paidHistory) *feeHistoryResponse {
 	return &feeHistoryResponse{
 		Account:           as.Account,
 		Address:           as.Address,
@@ -169,9 +169,9 @@ func newFeeHistoryResponse(as *accountStation, ph [] paidHistory) *feeHistoryRes
 }
 
 type feeHistoryWithoutPaidResponse struct {
-	Account       string           `json:"account"`
-	Name          string           `json:"account_name"`
-	UnpaidHistory [] unpaidHistory `json:"unpaid_history"`
+	Account       string          `json:"account"`
+	Name          string          `json:"account_name"`
+	UnpaidHistory []unpaidHistory `json:"unpaid_history"`
 }
 
 type unpaidHistory struct {
@@ -201,7 +201,7 @@ func newUnpaidHistory(detail *feeDetail, date string) *unpaidHistory {
 	}
 }
 
-func newFeeHistoryWithoutPaidResponse(as *accountStation, history [] unpaidHistory) *feeHistoryWithoutPaidResponse {
+func newFeeHistoryWithoutPaidResponse(as *accountStation, history []unpaidHistory) *feeHistoryWithoutPaidResponse {
 	return &feeHistoryWithoutPaidResponse{
 		Account:       as.Account,
 		Name:          as.Name,

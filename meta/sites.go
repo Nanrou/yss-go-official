@@ -8,7 +8,7 @@ type site struct {
 	Position string `json:"position"`
 }
 
-var Sites = [...] *site{
+var Sites = [...]*site{
 	{
 		Name:     "香洲营业厅",
 		Address:  "香洲梅华东路338号",
