@@ -66,6 +66,29 @@ func handleBind(w http.ResponseWriter, r *http.Request) {
 						logger.GetLogEntry(r).Infof("Mysql statement exec error, params: %s, err: %s", err)
 						errFlag = true
 					}
+				} else {
+					_needSet := false
+					if bindingRecord.defaultAccount.Valid {
+						if len(bindingRecord.defaultAccount.String) == 0 {
+							_needSet = true
+						}
+					} else {
+						_needSet = true
+					}
+					// 无默认的时候更新默认
+					if _needSet {
+						stmt, err := conn.MysqlDB.Prepare(mysqlSetDefaultAccountCmd)
+						if err != nil {
+							logger.GetLogEntry(r).Infof("Mysql prepare statement error, stmt: %s, err: %s ", mysqlSetDefaultAccountCmd, err)
+							errFlag = true
+						} else {
+							_, err = stmt.Exec(bindData.Account, idn)
+							if err != nil {
+								logger.GetLogEntry(r).Infof("Mysql exec error, stmt: %s, err: %s ", mysqlSetDefaultAccountCmd, err)
+								errFlag = true
+							}
+						}
+					}
 				}
 				stmt, err = conn.MysqlDB.Prepare(mysqlCreateUserDataCmd)
 				if err != nil {
@@ -106,9 +129,10 @@ func handleBind(w http.ResponseWriter, r *http.Request) {
 
 func checkAccountValidate(data BindData) bool {
 	var _useless string
-	err := conn.MssqlDB.QueryRow(mssqlQueryCheckAccountCmd,
+	err := conn.MssqlDB.QueryRow(mssqlQueryCheckCmd,
 		sql.Named("account", data.Account),
-		sql.Named("name", data.Name)).Scan(&_useless)
+		sql.Named("name", data.Name),
+		sql.Named("phone", data.Phone)).Scan(&_useless)
 	if err != nil {
 		return false
 	}
