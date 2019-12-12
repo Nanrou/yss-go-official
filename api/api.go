@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
@@ -90,7 +91,7 @@ func init() {
 	YssRouter.Use(render.SetContentType(render.ContentTypeJSON))
 	YssRouter.Use(WhiteListMiddleware)
 	YssRouter.Use(InjectIdentifierMiddleware)
-	YssRouter.Route("/yss", func(r chi.Router) {
+	YssRouter.Route(fmt.Sprintf("/%s", conn.ApiPrefix), func(r chi.Router) {
 		r.Get("/right_content", handleRightContent)
 		r.Get("/sites", handleSites)
 		r.Get("/accounts", handleAccounts)

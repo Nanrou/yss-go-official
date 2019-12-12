@@ -32,6 +32,7 @@ type config struct {
 	Prod   sqlConfig
 	Mssql  sqlConfig
 	Secret string
+	Prefix string
 	Trust  trustMeta
 }
 

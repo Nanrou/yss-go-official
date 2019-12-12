@@ -64,6 +64,7 @@ var (
 	MysqlDB   *sql.DB
 	RedisConn *redis.Client
 	_config   *config
+	ApiPrefix string
 )
 
 func init() {
@@ -71,4 +72,5 @@ func init() {
 	MssqlDB = mssqlConn(_config)
 	MysqlDB = mysqlConn(_config)
 	RedisConn = redisConn(_config.Secret)
+	ApiPrefix = _config.Prefix
 }
