@@ -89,7 +89,7 @@ func init() {
 	YssRouter.Use(middleware.RealIP)
 	YssRouter.Use(logger.Middleware)
 	YssRouter.Use(render.SetContentType(render.ContentTypeJSON))
-	YssRouter.Use(WhiteListMiddleware)
+	//YssRouter.Use(WhiteListMiddleware)
 	YssRouter.Use(InjectIdentifierMiddleware)
 	YssRouter.Route(fmt.Sprintf("/%s", conn.ApiPrefix), func(r chi.Router) {
 		r.Get("/right_content", handleRightContent)
@@ -102,6 +102,7 @@ func init() {
 		r.Get("/fee_detail", handleFeeDetail)
 		r.Post("/bind", handleBind)
 		r.Post("/cancel_bind", handleCancelBind)
+		r.Post("/set_default", handleSetDefault)
 		// r.Get("/redis_in", handleRedisIn)
 		// r.Get("/redis_out", handleRedisOut)
 	})

@@ -23,7 +23,7 @@ func handleFeeDetail(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if account, ok := checkBinding(r); ok {
-		_key := fmt.Sprintf(keyFeeHistory, account)
+		_key := fmt.Sprintf(keyFeeDetail, account)
 		if resp, exist := redisGet(r, _key); exist {
 			err = render.Render(w, r, NewResponseOK(resp))
 			if err != nil {
