@@ -121,7 +121,7 @@ func getFeeDetail(r *http.Request, yszbh string, date string) *feeDetail {
 		}
 		if tmpPaid == "true" {
 			fd.Paid = true
-			fd.Charge = "0" // fix
+			// fd.Charge = "0" // todo fix
 		} else {
 			fd.Paid = false
 		}
