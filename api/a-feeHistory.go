@@ -12,6 +12,7 @@ import (
 )
 
 var keyFeeHistory = "%s:feeHistory"
+// 只通过redis做缓存
 
 // fee_history
 func handleFeeHistory(w http.ResponseWriter, r *http.Request) {

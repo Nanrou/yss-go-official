@@ -8,6 +8,7 @@ import (
 )
 
 var keyFeeDetail = "%s:%s:keyFeeDetail"
+// 只通过redis做缓存
 
 // fee_detail
 func handleFeeDetail(w http.ResponseWriter, r *http.Request) {
