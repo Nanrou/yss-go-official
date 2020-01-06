@@ -7,7 +7,7 @@ import (
 	"yss-go-official/logger"
 )
 
-var keyFeeDetail = "%s:keyFeeDetail"
+var keyFeeDetail = "%s:%s:keyFeeDetail"
 
 // fee_detail
 func handleFeeDetail(w http.ResponseWriter, r *http.Request) {
@@ -23,7 +23,7 @@ func handleFeeDetail(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if account, ok := checkBinding(r); ok {
-		_key := fmt.Sprintf(keyFeeDetail, account)
+		_key := fmt.Sprintf(keyFeeDetail, account, billId)
 		if resp, exist := redisGet(r, _key); exist {
 			err = render.Render(w, r, NewResponseOK(resp))
 			if err != nil {
